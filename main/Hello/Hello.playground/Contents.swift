@@ -23,8 +23,9 @@
 import UIKit
 import RxSwift
 
-
-
+// 21.02.08
+let disposeBag = DisposeBag()
+Observable.just("Hello, RxSwift").subscribe { print($0) }.disposed(by: disposeBag)
 
 
 
