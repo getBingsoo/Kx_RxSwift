@@ -27,15 +27,39 @@ import RxSwift
  # Disposables
  */
 
+let subscription1 = Observable.from([1, 2, 3])
+    .subscribe(onNext: { elem in
+        print(elem)
+    }, onError: { error in
+        print(error)
+    }, onCompleted: {
+        print("completed")
+    }, onDisposed: {
+        print("disposed")
+    })
+
+subscription1.dispose()
+
+// DisposeBag로 해제하는게 좋다.
+var bag = DisposeBag()
+
+Observable.from([1, 2, 3]).subscribe() { print($0) }.disposed(by: bag)
 
 
+let subscription2 = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: { elem in
+    print(elem)
+}, onError: { error in
+    print(error)
+}, onCompleted: {
+    print("completed")
+}, onDisposed: {
+    print("disposed")
+})
 
-
-
-
-
-
-
+// 3초 뒤 해제
+DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+    subscription2.dispose()
+}
 
 
 

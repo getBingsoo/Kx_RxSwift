@@ -27,7 +27,7 @@ import RxSwift
  # Observers
  */
 
-Observable<Int>.create { (observer) -> Disposable in
+let o1 = Observable<Int>.create { (observer) -> Disposable in
    observer.on(.next(0))
    observer.onNext(1)
    
@@ -36,7 +36,19 @@ Observable<Int>.create { (observer) -> Disposable in
    return Disposables.create()
 }
 
+o1.subscribe() {
+    print($0)
+}
 
+o1.subscribe() {
+    if let element = $0.element {
+        print(element)
+    }
+}
+
+o1.subscribe(onNext: { elem in
+    print(elem)
+})
 
 Observable.from([1, 2, 3])
 
