@@ -35,3 +35,25 @@ enum MyError: Error {
    case error
 }
 
+
+let p = PublishSubject<Int>()
+
+let po1 = p.subscribe { print("publish:", $0) }
+po1.disposed(by: disposeBag)
+p.onNext(1)
+
+let b = BehaviorSubject<Int>(value: 0)
+
+let bo1 = b.subscribe { print("bo1:", $0) }
+bo1.disposed(by: disposeBag)
+b.onNext(1)
+
+let bo2 = b.subscribe { print("bo2:", $0) }
+bo2.disposed(by: disposeBag)
+
+// completed, error
+//b.onCompleted()
+b.onError(MyError.error)
+
+let bo3 = b.subscribe { print("bo3:", $0) }
+bo3.disposed(by: disposeBag)

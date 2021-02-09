@@ -30,4 +30,14 @@ import RxCocoa
 
 let bag = DisposeBag()
 
+let prelay = PublishRelay<Int>()
+prelay.subscribe { print("1: \($0)") }.disposed(by: bag)
+prelay.accept(1)
 
+let brelay = BehaviorRelay(value: 1)
+brelay.accept(2)
+brelay.subscribe { print("2: \($0)") }.disposed(by: bag) // 2
+
+brelay.accept(3)
+
+print(brelay.value) // 3

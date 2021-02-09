@@ -34,3 +34,14 @@ enum MyError: Error {
    case error
 }
 
+
+
+let asyncSubject = AsyncSubject<Int>()
+asyncSubject.subscribe { print($0) }.disposed(by: bag)
+
+asyncSubject.onNext(2)
+asyncSubject.onNext(3)
+asyncSubject.onCompleted()
+
+// 에러는 에러만 전달 (next 불리지 않음)
+asyncSubject.onError(MyError.error)

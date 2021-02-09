@@ -35,3 +35,23 @@ enum MyError: Error {
 }
 
 
+
+
+let replaySubject = ReplaySubject<Int>.create(bufferSize: 3)
+
+(1...10).forEach { replaySubject.onNext($0) }
+
+let o1 = replaySubject.subscribe { print("o1:", $0) } // 8, 9, 10
+o1.disposed(by: disposeBag)
+
+replaySubject.subscribe { print("o2:", $0) }.disposed(by: disposeBag)
+replaySubject.onNext(11)
+
+replaySubject.subscribe { print("o3:", $0) }.disposed(by: disposeBag)
+
+// completed -> 얜 좀 특이함. 3개 호출하고 completed
+//replaySubject.onCompleted()
+replaySubject.onError(MyError.error) // 에러도 마찬가지.
+
+replaySubject.subscribe { print("o4:", $0) }.disposed(by: disposeBag)
+
