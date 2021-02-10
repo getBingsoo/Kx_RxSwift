@@ -32,8 +32,14 @@ let red = "🔴"
 let blue = "🔵"
 
 
+// 숫자
+// 10에서 2씩 감소
+Observable<Int>.generate(initialState: 10, condition: { $0 > 0 }, iterate: { $0 - 2 }).subscribe { print($0) }.disposed(by: disposeBag)
 
 
+// 문자
+Observable<String>.generate(initialState: blue, condition: { $0.count < 10 }, iterate: { $0.count.isMultiple(of: 2) ? $0 + blue : $0 + red  })
+    .subscribe { print($0) }.disposed(by: disposeBag)
 
 
 

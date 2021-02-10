@@ -33,10 +33,17 @@ let fruits = ["🍎", "🍐", "🍋", "🍇", "🍈", "🍓", "🍑"]
 var flag = true
 
 
+let factory = Observable<String>.deferred {
+    flag.toggle()
 
+    if flag {
+        return Observable.from(animals) // animals 안의 인자를 하나하나 리턴
+    } else {
+        return Observable.from(fruits)
+    }
+}
 
-
-
-
-
+factory.subscribe { print($0) }.disposed(by: disposeBag) // 과일
+factory.subscribe { print($0) }.disposed(by: disposeBag) // 동물
+factory.subscribe { print($0) }.disposed(by: disposeBag) // 과일
 

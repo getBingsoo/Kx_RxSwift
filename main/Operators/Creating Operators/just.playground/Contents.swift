@@ -30,6 +30,7 @@ import RxSwift
 let disposeBag = DisposeBag()
 let element = "😀"
 
+// 그대~로 방출
 Observable.just(element)
    .subscribe { event in print(event) }
    .disposed(by: disposeBag)

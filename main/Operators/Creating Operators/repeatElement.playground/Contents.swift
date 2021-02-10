@@ -30,7 +30,8 @@ import RxSwift
 let disposeBag = DisposeBag()
 let element = "❤️"
 
-
+// 원래 무한정인데 take 사용하여 6번으로 제한
+Observable<String>.repeatElement(element).take(6).subscribe { print($0) }.disposed(by: disposeBag)
 
 
 

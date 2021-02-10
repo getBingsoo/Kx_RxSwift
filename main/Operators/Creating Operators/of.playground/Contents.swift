@@ -32,6 +32,7 @@ let apple = "🍏"
 let orange = "🍊"
 let kiwi = "🥝"
 
+// 통쨰로 방출. just와 다른점은 가변파라미터라는 것
 Observable.of(apple, orange, kiwi)
    .subscribe { element in print(element) }
    .disposed(by: disposeBag)
