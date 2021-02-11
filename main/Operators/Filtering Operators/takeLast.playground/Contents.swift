@@ -27,8 +27,21 @@ import RxSwift
  # takeLast
  */
 
+enum MyError: Error {
+    case error
+}
 let disposeBag = DisposeBag()
 let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
+let subject = PublishSubject<Int>()
 
+subject.takeLast(3).subscribe { print($0) }.disposed(by: disposeBag)
+
+numbers.forEach { subject.onNext($0) }
+
+subject.onNext(11)
+
+//subject.onCompleted()
+
+subject.onError(MyError.error)
 

@@ -38,7 +38,8 @@ func currentTimeString() -> String {
    return f.string(from: Date())
 }
 
-
+// latest true(default)
+// (2)마지막 이벤트 → 2.5초(마지막이벤트 전달) → (3)
 Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
    .debug()
    .take(10)
@@ -46,7 +47,8 @@ Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
    .subscribe { print(currentTimeString(), $0) }
    .disposed(by: disposeBag)
 
-
+// latest false
+// (2)마지막 이벤트 → 2.5초(전달하지않고 다음 next올때까지 기다림) → (3) → (3)이 왔으니 (3) 전달
 Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
    .debug()
    .take(10)

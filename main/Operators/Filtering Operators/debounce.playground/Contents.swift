@@ -51,7 +51,8 @@ let buttonTap = Observable<String>.create { observer in
    }
 }
 
-buttonTap   
+buttonTap
+    .debounce(.milliseconds(1000), scheduler: MainScheduler.instance)
    .subscribe { print($0) }
    .disposed(by: disposeBag)
 

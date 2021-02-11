@@ -30,7 +30,8 @@ import RxSwift
 let disposeBag = DisposeBag()
 let fruits = ["🍏", "🍎", "🍋", "🍓", "🍇"]
 
-
+// index
+Observable.from(fruits).elementAt(3).subscribe { print($0) }.disposed(by: disposeBag)
 
 
 

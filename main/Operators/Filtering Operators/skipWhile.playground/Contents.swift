@@ -29,3 +29,6 @@ import RxSwift
 
 let disposeBag = DisposeBag()
 let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+// 조건문이 false가 된 순간부터 출력한다.
+Observable.from(numbers).skipWhile { $0 < 5 }.subscribe { print($0) }.disposed(by: disposeBag)
