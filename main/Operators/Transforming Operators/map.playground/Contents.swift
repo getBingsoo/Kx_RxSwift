@@ -31,4 +31,12 @@ let disposeBag = DisposeBag()
 let skills = ["Swift", "SwiftUI", "RxSwift"]
 
 
+// HELLO 붙이기
+Observable.from(skills)
+    .map { "Hello, \($0)" }
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
 
+Observable.from(skills)
+    .map { $0.count }
+    .subscribe { print($0) }.disposed(by: disposeBag)
