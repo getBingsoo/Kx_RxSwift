@@ -31,3 +31,7 @@ let bag = DisposeBag()
 let numbers = [1, 2, 3, 4, 5]
 
 
+Observable.from(numbers)
+    .startWith(0, -1)
+    .startWith(-3)
+    .subscribe { print($0) }.disposed(by: bag)

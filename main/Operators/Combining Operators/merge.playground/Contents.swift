@@ -37,4 +37,12 @@ let oddNumbers = BehaviorSubject(value: 1)
 let evenNumbers = BehaviorSubject(value: 2)
 let negativeNumbers = BehaviorSubject(value: -1)
 
+// 2개 제한
+Observable.of(oddNumbers, evenNumbers, negativeNumbers).merge(maxConcurrent: 2).subscribe { print($0) }.disposed(by: bag)
 
+oddNumbers.onCompleted()
+
+
+// 이건뭐지
+Observable.merge([oddNumbers, evenNumbers, negativeNumbers])
+    .subscribe { print($0) }.disposed(by: bag)
