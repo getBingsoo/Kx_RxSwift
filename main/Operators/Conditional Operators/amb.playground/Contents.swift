@@ -37,4 +37,19 @@ let a = PublishSubject<String>()
 let b = PublishSubject<String>()
 let c = PublishSubject<String>()
 
+// 적자생존같은놈.. 가장먼저 next를 전달한 옵저버블을 구독하고 나머지를 무시한다.
+a.amb(b).subscribe { print($0) }.disposed(by: bag)
 
+a.onNext("A")
+b.onNext("B")
+
+// 이렇게하면? 또 다른 쌍인듯.
+b.amb(c).subscribe { print($0) }.disposed(by: bag)
+c.onNext("C")
+
+b.onCompleted()
+a.onCompleted() // 실행
+c.onCompleted() // 실행
+
+Observable.amb([a, b, c]).subscribe { print($0) }.disposed(by: bag)
+a.onCompleted() // 실행

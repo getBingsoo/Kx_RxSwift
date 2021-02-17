@@ -30,18 +30,24 @@ import RxSwift
 let bag = DisposeBag()
 let subject = PublishSubject<Int>()
 
-let source = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance).take(5)
+// 1초 주기로 5개의 정수를 방출하는 옵저버블
+let source = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance).take(5).multicast(subject) // 1) multicast 추가
 
+// 구독자1
 source
    .subscribe { print("🔵", $0) }
    .disposed(by: bag)
 
+// 2) 시작된다.
+source.connect()
+
+// 구독자2
 source
    .delaySubscription(.seconds(3), scheduler: MainScheduler.instance)
    .subscribe { print("🔴", $0) }
    .disposed(by: bag)
 
-
+source.connect()
 
 
 
